@@ -316,7 +316,7 @@ impl <'a> Repository<'a> {
         let inode= &mut (Vec::new());
         let parent= &mut (Vec::new());
 
-        (*inode).extend_from_slice(&ROOT_INODE);
+        (*inode).extend(ROOT_INODE.iter());
         for c in path.components() {
             inode.truncate(INODE_SIZE);
             inode.extend(c.as_os_str().to_str().unwrap().as_bytes());
@@ -359,7 +359,7 @@ impl <'a> Repository<'a> {
     }
     pub fn remove_file(&mut self, path:&std::path::Path) -> Result<(), Error>{
         let mut inode=Vec::new();
-        inode.extend_from_slice(&ROOT_INODE);
+        inode.extend(ROOT_INODE.iter());
         let mut comp=path.components();
         let mut c=comp.next();
         loop {
